@@ -1,5 +1,3 @@
---Crearemos una tabla muy simple para probar el poder de PL sql
-
 create table DANCE(id_dance integer, nombre varchar2(40), edad integer);
 --prendemos el servidor en modo de desarrollador
 set serveroutput on;
@@ -16,3 +14,27 @@ edad:=YEARS*365;
 DBMS_OUTPUT.PUT_LINE('TU EDAD EN DIA ES'|| edad);
 END;
 /
+--crear un bloque SQL que genere 200,0000registros en secuencia ascendiente en la table dance
+BEGIN
+
+FOR I IN 1..200000 LOOP
+INSERT INTO DANCE VALUES(I,'julio',21);
+END LOOP;
+END;
+/
+--HACER UN SELECT 
+SELECT * FROM DANCE;
+
+--sistema de peliculas la de sala sera de tarea
+CREATE TABLE PELICULA(ID_PELICULA INTEGER,
+TITULO VARCHAR2(120),
+SIPNOSIS VARCHAR2(500),
+CLASIFICACION VARCHAR2(5),
+CONSTRAINT PK_ID_PELICULA PRIMARY KEY(ID_PELICULA));
+DESCRIBE PELICULA;
+
+CREATE TABLE HORARIO (ID_HORARIO INTEGER,
+ID_PELICULA INTEGER,
+HORARIO VARCHAR2(8),
+CONSTRAINT PK_ID_HORARIO PRIMARY KEY(ID_HORARIO),
+CONSTRAINT FK1_ID_PELICULA FOREIGN KEY(ID_PELICULA) REFERENCES PELICULA(ID_PELICULA));
